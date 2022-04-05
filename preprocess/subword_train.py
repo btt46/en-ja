@@ -1,4 +1,3 @@
-from numpy import require
 import sentencepiece as sp 
 import argparse
 

@@ -62,7 +62,7 @@ done
 
 # Truecaser
 echo "=>  Truecasing...."
-echo "Traning for english..."
+echo "Training for english..."
 env LC_ALL=en_US.UTF-8  $TRUECASER_TRAIN --model $DATASET/tmp/truecase-model.en --corpus ${TOKENIZED_DATA}/train.en
 
 for set in $DATASET_NAME; do
