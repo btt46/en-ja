@@ -70,7 +70,7 @@ for set in $DATASET_NAME; do
 done
 
 for set in $DATASET_NAME; do
-    mecab -Owakati ${NORMALIZED_DATA}/${SET}.ja > ${TRUECASED_DATA}/${SET}.ja
+    mecab -Owakati ${NORMALIZED_DATA}/${set}.ja > ${TRUECASED_DATA}/${set}.ja 
 done
 
 # SentencePieceでサブワード化
