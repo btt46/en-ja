@@ -13,7 +13,7 @@ def main():
     doc_parsed = []
 
     print('=> Subword applying....')
-    with open(args.input, 'r', 'utf-8') as fp:
+    with open(args.input, 'r', encoding='utf-8') as fp:
         lines = fp.readlines()
         for line in lines:
             line = line.strip()
@@ -21,7 +21,7 @@ def main():
             doc_parsed.append(pieces)
         fp.close()
 
-    with open(args.output, 'w', 'utf-8') as fp:
+    with open(args.output, 'w', encoding='utf-8') as fp:
         for line in doc_parsed:
             fp.write(line + '\n')
         fp.close()
