@@ -1,5 +1,5 @@
 from numpy import require
-import sentenpiece as sp 
+import sentencepiece as sp 
 import argparse
 
 def main():

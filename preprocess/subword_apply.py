@@ -1,4 +1,4 @@
-import sentenpiece 
+import sentencepiece 
 import argparse
 
 def main():
@@ -8,7 +8,7 @@ def main():
     parser.add_argument('-m','--model', type=str,required=True, dest='model', help='Model name')
 
     args = parser.parse_args()
-    sp = sentenpiece.SentencePieceProcessor()
+    sp = sentencepiece.SentencePieceProcessor()
     sp.Load(args.model)
     doc_parsed = []
 
