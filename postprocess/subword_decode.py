@@ -16,8 +16,8 @@ def main():
         lines = fp.readlines()
         for line in lines:
             line = line.strip()
-            pieces = ' '.join(sp.decode(line.split(' ')))
-            doc_parsed.append(pieces.replace(' ',''))
+            pieces = ''.join(sp.decode(line.split(' ')))
+            doc_parsed.append(pieces)
         fp.close()
 
     with open(args.output, 'w', encoding='utf-8') as fp:
