@@ -47,12 +47,13 @@ fi
 
 # Normalization
 echo "=> Normalizing...."
-for lang in $src $tgt; do 
-    for set in $DATASET_NAME; do
-        python3 ${EXPDIR}/preprocess/normalize.py ${DATASET}/${set}.${lang} \
-                                        ${NORMALIZED_DATA}/${set}.${lang}
-    done
+
+for set in $DATASET_NAME; do
+    python3 ${EXPDIR}/preprocess/normalize.py ${DATASET}/${set}.en \
+                                    ${NORMALIZED_DATA}/${set}.en
+    cp ${DATASET}/${set}.ja ${NORMALIZED_DATA}/${set}.ja
 done
+
 
 # Tokenization
 echo "=> Tokenizing...."
