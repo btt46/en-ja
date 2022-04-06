@@ -28,7 +28,7 @@ python3.6 $EXPDIR/postprocess/subword_decode.py -i ${PWD}/results/${MODEL_NAME}/
                                                 -m $DATASET/tmp/sp.16000.ja.model
 
 echo "VALID" >> ${PWD}/results/${MODEL_NAME}/valid_result.txt
-env LC_ALL=en_US.UTF-8 perl $PWD/multi-bleu.pl $PWD/data/tmp/truecased/valid.${tgt} < ${PWD}/results/${MODEL_NAME}/valid.${tgt} >> ${PWD}/results/${MODEL_NAME}/valid_result.txt
+env LC_ALL=en_US.UTF-8 perl $PWD/multi-bleu.pl $PWD/data/tmp/normalized/valid.${tgt} < ${PWD}/results/${MODEL_NAME}/valid.${tgt} >> ${PWD}/results/${MODEL_NAME}/valid_result.txt
 
 ########################## Test dataset #########################################
 
@@ -43,5 +43,5 @@ python3.6 $EXPDIR/postprocess/subword_decode.py -i ${PWD}/results/${MODEL_NAME}/
                                                 -m $DATASET/tmp/sp.16000.ja.model
 
 echo "TEST" >> ${PWD}/results/${MODEL_NAME}/test_result.txt
-env LC_ALL=en_US.UTF-8 perl $PWD/multi-bleu.pl $PWD/data/tmp/truecased/test.${tgt} < ${PWD}/results/${MODEL_NAME}/test.${tgt} >> ${PWD}/results/${MODEL_NAME}/test_result.txt
+env LC_ALL=en_US.UTF-8 perl $PWD/multi-bleu.pl $PWD/data/tmp/normalized/test.${tgt} < ${PWD}/results/${MODEL_NAME}/test.${tgt} >> ${PWD}/results/${MODEL_NAME}/test_result.txt
 
