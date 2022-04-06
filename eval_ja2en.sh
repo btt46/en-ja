@@ -24,11 +24,11 @@ CUDA_VISIBLE_DEVICES=$GPUS env LC_ALL=en_US.UTF-8 fairseq-interactive $BIN_DATA 
             --beam 5 | tee ${PWD}/results/${MODEL_NAME}/valid_trans_result.${tgt}
 
 grep ^H ${PWD}/results/${MODEL_NAME}/valid_trans_result.${tgt} | cut -f3 > ${PWD}/results/${MODEL_NAME}/valid_trans.${tgt}
-python3.6 $EXPDIR/postprocess/subword_decode.py -i ${PWD}/results/${MODEL_NAME}/test_trans.${tgt} -o ${PWD}/results/${MODEL_NAME}/test.${tgt} \
+python3.6 $EXPDIR/postprocess/subword_decode.py -i ${PWD}/results/${MODEL_NAME}/test_trans.${tgt} -o ${PWD}/results/${MODEL_NAME}/valid_rmvsubword.${tgt} \
                                                 -m $DATASET/tmp/sp.16000.en.model
 
 # detruecase
-$DETRUECASER < ${PWD}/results/${MODEL_NAME}/valid_rmvbpe.${tgt} > ${PWD}/results/${MODEL_NAME}/valid_detruecase.${tgt}
+$DETRUECASER < ${PWD}/results/${MODEL_NAME}/valid_rmvsubword.${tgt} > ${PWD}/results/${MODEL_NAME}/valid_detruecase.${tgt}
 
 # detokenize
 env LC_ALL=en_US.UTF-8 perl $DETOK < ${PWD}/results/${MODEL_NAME}/valid_detruecase.${tgt} > ${PWD}/results/${MODEL_NAME}/valid.${tgt}
@@ -44,11 +44,11 @@ CUDA_VISIBLE_DEVICES=$GPUS env LC_ALL=en_US.UTF-8 fairseq-interactive $BIN_DATA 
             --beam 5 | tee ${PWD}/results/${MODEL_NAME}/test_trans_result.${tgt}
 
 grep ^H ${PWD}/results/${MODEL_NAME}/test_trans_result.${tgt} | cut -f3 > ${PWD}/results/${MODEL_NAME}/test_trans.${tgt}
-python3.6 $EXPDIR/postprocess/subword_decode.py -i ${PWD}/results/${MODEL_NAME}/test_trans.${tgt} -o ${PWD}/results/${MODEL_NAME}/test.${tgt} \
+python3.6 $EXPDIR/postprocess/subword_decode.py -i ${PWD}/results/${MODEL_NAME}/test_trans.${tgt} -o ${PWD}/results/${MODEL_NAME}/test_rmvsubword.${tgt} \
                                                 -m $DATASET/tmp/sp.16000.en.model
 
 # detruecase
-$DETRUECASER < ${PWD}/results/${MODEL_NAME}/test_rmvbpe.${tgt} > ${PWD}/results/${MODEL_NAME}/test_detruecase.${tgt}
+$DETRUECASER < ${PWD}/results/${MODEL_NAME}/test_rmvsubword.${tgt} > ${PWD}/results/${MODEL_NAME}/test_detruecase.${tgt}
 
 # detokenize
 env LC_ALL=en_US.UTF-8 perl $DETOK < ${PWD}/results/${MODEL_NAME}/test_detruecase.${tgt} > ${PWD}/results/${MODEL_NAME}/test.${tgt}
