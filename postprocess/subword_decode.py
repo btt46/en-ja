@@ -17,7 +17,7 @@ def main():
         for line in lines:
             line = line.strip()
             pieces = ' '.join(sp.decode(line.split(' ')))
-            doc_parsed.append(pieces)
+            doc_parsed.append(pieces.replace(' ',''))
         fp.close()
 
     with open(args.output, 'w', encoding='utf-8') as fp:
