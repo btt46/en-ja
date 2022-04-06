@@ -11,14 +11,14 @@ MODEL_NAME=$2
 MODEL=$PWD/models/${MODEL_NAME}/checkpoint_best.pt
 
 DATASET=$PWD/data
-BPE_DATA=$DATASET/tmp/bpe-data
+SUBWORD_DATA=$DATASET/tmp/subword-data
 BIN_DATA=$DATASET/tmp/bin-data
 
 
 ########################## Validation dataset #########################################
 
 CUDA_VISIBLE_DEVICES=$GPUS env LC_ALL=en_US.UTF-8 fairseq-interactive $BIN_DATA \
-            --input $BPE_DATA/valid.${src} \
+            --input $SUBWORD_DATA/valid.${src} \
             --path $MODEL \
             --beam 5 | tee ${PWD}/results/${MODEL_NAME}/valid_trans_result.${tgt}
 
@@ -33,7 +33,7 @@ env LC_ALL=en_US.UTF-8 perl $PWD/multi-bleu.pl $PWD/data/tmp/truecased/valid.${t
 ########################## Test dataset #########################################
 
 CUDA_VISIBLE_DEVICES=$GPUS env LC_ALL=en_US.UTF-8 fairseq-interactive $BIN_DATA \
-            --input $BPE_DATA/test.${src} \
+            --input $SUBWORD_DATA/test.${src} \
             --path $MODEL \
             --beam 5 | tee ${PWD}/results/${MODEL_NAME}/test_trans_result.${tgt}
 
