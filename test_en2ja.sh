@@ -18,7 +18,7 @@ BIN_DATA=$DATASET/tmp/bin-data
 ########################## Train dataset #########################################
 
 CUDA_VISIBLE_DEVICES=$GPUS env LC_ALL=en_US.UTF-8 fairseq-interactive $BIN_DATA \
-            --input $SUBWORD_DATA/train.${src} \
+            --input $SUBWORD_DATA/train_10000.${src} \
             --path $MODEL \
             --beam 5 | tee ${PWD}/results/${MODEL_NAME}/train_trans_result.${tgt}
 
@@ -28,4 +28,4 @@ python3.6 $EXPDIR/postprocess/subword_decode.py -i ${PWD}/results/${MODEL_NAME}/
                                                 -m $DATASET/tmp/sp.16000.ja.model
 
 echo "train" >> ${PWD}/results/${MODEL_NAME}/train_result.txt
-env LC_ALL=en_US.UTF-8 perl $PWD/multi-bleu.pl $PWD/data/tmp/truecased/train.${tgt} < ${PWD}/results/${MODEL_NAME}/train.${tgt} >> ${PWD}/results/${MODEL_NAME}/train_result.txt
+env LC_ALL=en_US.UTF-8 perl $PWD/multi-bleu.pl $PWD/data/tmp/truecased/train_10000.${tgt} < ${PWD}/results/${MODEL_NAME}/train.${tgt} >> ${PWD}/results/${MODEL_NAME}/train_result.txt
