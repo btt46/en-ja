@@ -26,6 +26,6 @@ grep ^H ${PWD}/results/${MODEL_NAME}/train_trans_result.${tgt} | cut -f3 > ${PWD
 
 python3.6 $EXPDIR/postprocess/subword_decode.py -i ${PWD}/results/${MODEL_NAME}/train_trans.${tgt} -o ${PWD}/results/${MODEL_NAME}/train.${tgt} \
                                                 -m $DATASET/tmp/sp.16000.ja.model
-
+python3.6 $EXPDIR/preprocess/normalize.py ${PWD}/results/${MODEL_NAME}/train.${tgt} ${PWD}/results/${MODEL_NAME}/train_normalized.${tgt}
 echo "train" >> ${PWD}/results/${MODEL_NAME}/train_result.txt
-env LC_ALL=en_US.UTF-8 perl $PWD/multi-bleu.pl $PWD/data/tmp/truecased/train_10000.${tgt} < ${PWD}/results/${MODEL_NAME}/train.${tgt} >> ${PWD}/results/${MODEL_NAME}/train_result.txt
+env LC_ALL=en_US.UTF-8 perl $PWD/multi-bleu.pl $PWD/data/tmp/truecased/train_10000.${tgt} < ${PWD}/results/${MODEL_NAME}/train_normalized.${tgt} >> ${PWD}/results/${MODEL_NAME}/train_result.txt
