@@ -12,7 +12,7 @@ def main():
     doc_parsed = []
 
     print('=> Subword decoding....')
-    with open(args.input, 'r', encoding='utf-8',errors='ignore') as fp:
+    with open(args.input, 'r', encoding='utf-8') as fp:
         lines = fp.readlines()
         for line in lines:
             line = line.strip()
