@@ -77,12 +77,12 @@ for set in $DATASET_NAME; do
 done
 
 # SentencePieceでサブワード化
-python3 $EXPDIR/preprocess/subword_train.py -i ${TRUECASED_DATA}/train.en -o $DATASET/tmp/sp.16000.en -v 16000
-python3 $EXPDIR/preprocess/subword_train.py -i ${TRUECASED_DATA}/train.ja -o $DATASET/tmp/sp.16000.ja -v 16000
+python3.6 $EXPDIR/preprocess/subword_train.py -i ${TRUECASED_DATA}/train.en -o $DATASET/tmp/sp.16000.en -v 16000
+python3.6 $EXPDIR/preprocess/subword_train.py -i ${TRUECASED_DATA}/train.ja -o $DATASET/tmp/sp.16000.ja -v 16000
 
 for lang in en ja; do
     for set in $DATASET_NAME; do
-        python3 $EXPDIR/preprocess/subword_apply.py -i ${TRUECASED_DATA}/${set}.${lang} -o ${SUBWORD_DATA}/${set}.${lang} -m $DATASET/tmp/sp.16000.${lang}.model
+        python3.6 $EXPDIR/preprocess/subword_apply.py -i ${TRUECASED_DATA}/${set}.${lang} -o ${SUBWORD_DATA}/${set}.${lang} -m $DATASET/tmp/sp.16000.${lang}.model
     done
 done
 
