@@ -1,7 +1,7 @@
 # src=$1
 # tgt=$2
 
-HOME=/Users/thanhbui/Desktop/research
+HOME=/home/tbui
 EXPDIR=$PWD
 
 SCRIPTS=${HOME}/mosesdecoder/scripts
