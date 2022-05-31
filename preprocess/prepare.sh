@@ -92,6 +92,15 @@ cp ${SUBWORD_DATA}/train.ja ${SUBWORD_DATA}/train.1.tgt
 cp ${SUBWORD_DATA}/train.en ${SUBWORD_DATA}/train.2.tgt
 cp ${SUBWORD_DATA}/train.ja ${SUBWORD_DATA}/train.2.src
 
+cat ${SUBWORD_DATA}/valid.en >> ${SUBWORD_DATA}/valid.src
+cat ${SUBWORD_DATA}/valid.ja >> ${SUBWORD_DATA}/valid.src
+cat ${SUBWORD_DATA}/valid.ja >> ${SUBWORD_DATA}/valid.tgt
+cat ${SUBWORD_DATA}/valid.en >> ${SUBWORD_DATA}/valid.tgt
+
+cat ${SUBWORD_DATA}/test.en >> ${SUBWORD_DATA}/test.src
+cat ${SUBWORD_DATA}/test.ja >> ${SUBWORD_DATA}/test.src
+cat ${SUBWORD_DATA}/test.ja >> ${SUBWORD_DATA}/test.tgt
+cat ${SUBWORD_DATA}/test.en >> ${SUBWORD_DATA}/test.tgt
 
 fairseq-preprocess -s src -t tgt \
 			--destdir $BIN_DATA/train.1 \
