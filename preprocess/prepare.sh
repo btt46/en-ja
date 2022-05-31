@@ -1,7 +1,7 @@
-src=$1
-tgt=$2
+# src=$1
+# tgt=$2
 
-HOME=/home/tbui
+HOME=/Users/thanhbui/Desktop/research
 EXPDIR=$PWD
 
 SCRIPTS=${HOME}/mosesdecoder/scripts
@@ -43,6 +43,8 @@ fi
 
 if [ ! -d $BIN_DATA ]; then
     mkdir -vp $BIN_DATA
+    mkdir -vp $BIN_DATA/train.1
+    mkdir -vp $BIN_DATA/train.2
 fi
 
 # Normalization
@@ -75,18 +77,33 @@ for set in $DATASET_NAME; do
 done
 
 # SentencePieceでサブワード化
-python3.6 $EXPDIR/preprocess/subword_train.py -i ${TRUECASED_DATA}/train.en -o $DATASET/tmp/sp.16000.en -v 16000
-python3.6 $EXPDIR/preprocess/subword_train.py -i ${TRUECASED_DATA}/train.ja -o $DATASET/tmp/sp.16000.ja -v 16000
+python3 $EXPDIR/preprocess/subword_train.py -i ${TRUECASED_DATA}/train.en -o $DATASET/tmp/sp.16000.en -v 16000
+python3 $EXPDIR/preprocess/subword_train.py -i ${TRUECASED_DATA}/train.ja -o $DATASET/tmp/sp.16000.ja -v 16000
 
-for lang in $src $tgt; do
+for lang in en ja; do
     for set in $DATASET_NAME; do
-        python3.6 $EXPDIR/preprocess/subword_apply.py -i ${TRUECASED_DATA}/${set}.${lang} -o ${SUBWORD_DATA}/${set}.${lang} -m $DATASET/tmp/sp.16000.${lang}.model
+        python3 $EXPDIR/preprocess/subword_apply.py -i ${TRUECASED_DATA}/${set}.${lang} -o ${SUBWORD_DATA}/${set}.${lang} -m $DATASET/tmp/sp.16000.${lang}.model
     done
 done
 
-fairseq-preprocess -s $src -t $tgt \
-			--destdir $BIN_DATA \
-			--trainpref $SUBWORD_DATA/train \
+cp ${SUBWORD_DATA}/train.en ${SUBWORD_DATA}/train.1.src
+cp ${SUBWORD_DATA}/train.ja ${SUBWORD_DATA}/train.1.tgt
+
+cp ${SUBWORD_DATA}/train.en ${SUBWORD_DATA}/train.2.tgt
+cp ${SUBWORD_DATA}/train.ja ${SUBWORD_DATA}/train.2.src
+
+
+fairseq-preprocess -s src -t tgt \
+			--destdir $BIN_DATA/train.1 \
+			--trainpref $SUBWORD_DATA/train.1 \
+			--validpref $SUBWORD_DATA/valid \
+			--testpref $SUBWORD_DATA/test \
+			--workers 32 \
+            2>&1 | tee $EXPDIR/logs/preprocess
+
+fairseq-preprocess -s src -t tgt \
+			--destdir $BIN_DATA/train.2 \
+			--trainpref $SUBWORD_DATA/train.2 \
 			--validpref $SUBWORD_DATA/valid \
 			--testpref $SUBWORD_DATA/test \
 			--workers 32 \
